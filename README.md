@@ -1,7 +1,7 @@
 # JustDoIt
 
-#About 
+## About 
 
-#Project Brief & User Stories 
+## Project Brief & User Stories 
 
-#Learnings
+## Learnings
