@@ -8,20 +8,26 @@
   </head>
   <body>
     <section id="add-new-task">
-      <form>
+      
+      <form id="task-form" class="task-form">
         <label></label>
-        <input type="text" id="input-task"/>
-        <button>add task</button>
+        <input type="text" id="input-task" required/>
+        <button type="submit" id="submitTask">add task</button>
       </form>
     </section>
-    <section id="todo-list"></section>
-    <section id="done-list"></section>
 
-    <template id="newTaskTemplate ">
+    <section id="todos">
+      <ul id="todo-list" class="list"></ul>
+    </section>
+    <section id="completes">
+<ul id="done-list" class="list"></ul>
+    </section>
+
+    <template id="newTaskTemplate">
       <li class="task">
         <div class="task-box">
           <input type="checkbox" />
-          <h3 class="task-title"></h3>
+          <label></label>
         </div>
       </li>
     </template>
