@@ -1,3 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap');
+
+/* Colour variables (to be applied as needed)*/
+:root {
+  --black: black;
+  --bisque: bisque;
+
+}
+
+/* Global HTML styling */
+
+html{
+  font-family: Questrial;
+  background-color: var(--bisque);
+}
+
+/* Mobile styling */
+
 ul {
   list-style-type: none;
+}
+
+.display-grid{
+  display: block;
+}
+
+.text-align-center{
+  text-align: center;
+}
+
+.hamburger-menu > div {
+  width: 17px;
+  height: 4px;
+  background-color: var(--black);
+  margin: 4px;
+}
+
+/* Desktop/tablet styling */
+
+@media screen and (min-width: 320px){
+  .hamburger-menu {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    padding: 10px;
+  }
+
+  .hamburger-menu > div {
+    width: 17px;
+    height: 4px;
+    background-color: var(--black);
+    margin: 4px;
+  }
+
+  #todo-list {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: auto 1fr;
+  }
 }
