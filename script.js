@@ -43,14 +43,16 @@ button.addEventListener('click', deleteItem());
 
 //   Filter out completed to-dos from my list so that I can focus on what’s left to do
 
-const filterComplete = () => {
-  const taskList = {
-    'tasks': [
-      //{completed: true},
-    ]
-  };
+// const filterComplete = () => {
+//   const taskList = {
+//     'tasks': [
+//       //{completed: true},
+//     ]
+//   };
+//   return taskList.tasks.filter(task => !task.completed);
+
+// };
   
-  return taskList.tasks.filter(task => !task.completed);
   
 //   Delete things from the list if I don’t need to do them anymore
 //   Link to a button with click event listener
