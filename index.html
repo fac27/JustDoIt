@@ -7,21 +7,36 @@
     <title>JustDoIt</title>
   </head>
   <body>
-    <section id="add-new-task">
-      <form>
+    <nav>
+      <div class="hamburger-menu">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+    </nav>
+    <section id="add-new-task" class="text-align-center">
+      <h1>Just Do It</h1>
+      
+      <form id="task-form" class="task-form">
         <label></label>
-        <input type="text" id="input-task"/>
-        <button>add task</button>
+        <input type="text" id="input-task" required/>
+        <button type="submit" id="submitTask">add task</button>
       </form>
     </section>
-    <section id="todo-list"></section>
-    <section id="done-list"></section>
 
-    <template id="newTaskTemplate ">
+    <section id="todos" class="text-align-center">
+      <ul id="todo-list" class="list display-grid"></ul>
+    </section>
+    <section id="completes">
+<ul id="done-list" class="list"></ul>
+    </section>
+
+    <template id="newTaskTemplate">
       <li class="task">
         <div class="task-box">
           <input type="checkbox" />
-          <h3 class="task-title"></h3>
+          <label></label>
+          <button class="red-circle" id="delete-button">x</button>
         </div>
       </li>
     </template>
