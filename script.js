@@ -1,32 +1,37 @@
 // Add tasks to a list so that I can keep track of them
 //do we want to create a simple aray or an array of object? eg.
-const taskInput = document.getElementById("input-task");
-const form = document.getElementById("task-form");
-const todoList = document.getElementById("todo-list");
-const date = new Date().toDateString();
-const taskName = taskInput.value;
-const doneList = document.getElementById("done-list")
+// const date = new Date().toDateString();
+
+const taskList = document.querySelector("#todo-list");
+const newTaskTemplate = document.querySelector("#newTaskTemplate");
+const tasks = [];
+//add task to an array
 
 const addTask = (array, item) => {
-  const newArray = [...array, item];
-  return newArray;
+  array.push(item);
+  return array;
 };
 
-//function to add task item from input and put into dom
-const addtasktodom = (e) => {
-  e.preventDefault();
-  //create elements and set attributes
-  const template = document.querySelector("#newTaskTemplate");
-  const domFragment = template.content.cloneNode(true);
-  domFragment.querySelector("label").textContent = taskInput.value;
-  domFragment.querySelector("input[type=checkbox]").checked = false;
-  domFragment.querySelector(`input[value='${taskName}']`)
-  const checkbox = domFragment.querySelector("input[type=checkbox]");
-  checkbox.addEventListener("click", addtasktocomplete)
-  todoList.appendChild(domFragment)
-  document.forms[0].reset();
+const addTaskToList = (task) => {
+  const newTask = newTaskTemplate.content.cloneNode(true);
+  newTask.querySelector("label").textContent = task;
+  const taskItem = newTask.querySelector(".task");
+  taskList.appendChild(newTask);
+  taskList.addEventListener("click", addtasktocomplete);
+  addTask(tasks, newTask);
 };
-form.addEventListener("submit", addtasktodom);
+const form = document.getElementById("task-form");
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const taskInput = document.querySelector("#input-task");
+  const taskName = taskInput.value.trim();
+  if (taskName !== "") {
+    addTaskToList(taskName);
+    taskInput.value = "";
+  }
+  document.forms[0].reset();
+});
 
 const taskDone = () => {
   if (checkbox.checked) {
@@ -54,13 +59,18 @@ const addtasktocomplete = (e) => {
   }
 };
 
-//   Check things off my list so that I can see what I’ve done
-test("Checking an entry marks it as complete", () => {
-//   Check if checkmark is true/false
-});
-
 //  Placeholder event listener to connect to button
-button.addEventListener('click', deleteItem());
+//   Delete things from the list if I don’t need to do them anymore
+const deleteItem = (event) => {
+  if (event.target.matches("#delete-button")) {
+    const taskItem = event.target.closest(".task");
+    const index = [...taskList.children].indexOf(taskItem);
+    taskItem.remove();
+    tasks.splice(index, 1);
+  }
+};
+
+taskList.addEventListener("click", deleteItem);
 
 //   Filter out completed to-dos from my list so that I can focus on what’s left to do
 
@@ -73,20 +83,6 @@ button.addEventListener('click', deleteItem());
 //   return taskList.tasks.filter(task => !task.completed);
 
 // };
-  
-  
-//   Delete things from the list if I don’t need to do them anymore
-//   Link to a button with click event listener
-element.addeventlistner("click", deleteItem());
-
-const deleteItem = () => {
-  const itemList = [];
-
-  return (index) => {
-    itemList.splice(index, 1);
-    return itemList;
-  };
-};
 
 //   Filter out completed to-dos from my list so that I can focus on what’s left to do
 //   Link to a button with click event listener
@@ -100,4 +96,4 @@ const filterComplete = () => {
 };
 
 //  Placeholder event listener to connect to button
-button.addEventListener('click', filterComplete());
+button.addEventListener("click", filterComplete());
