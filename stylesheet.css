@@ -33,7 +33,7 @@ ul {
 }
 
 .display-grid{
-  display: block;
+  display: grid;
 }
 
 .text-align-center{

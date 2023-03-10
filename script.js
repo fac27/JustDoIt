@@ -5,6 +5,7 @@ const form = document.getElementById("task-form");
 const todoList = document.getElementById("todo-list");
 const date = new Date().toDateString();
 const taskName = taskInput.value;
+const doneList = document.getElementById("done-list")
 
 const addTask = (array, item) => {
   const newArray = [...array, item];
@@ -20,6 +21,8 @@ const addtasktodom = (e) => {
   domFragment.querySelector("label").textContent = taskInput.value;
   domFragment.querySelector("input[type=checkbox]").checked = false;
   domFragment.querySelector(`input[value='${taskName}']`)
+  const checkbox = domFragment.querySelector("input[type=checkbox]");
+  checkbox.addEventListener("click", addtasktocomplete)
   todoList.appendChild(domFragment)
   document.forms[0].reset();
 };
@@ -33,9 +36,27 @@ const taskDone = () => {
   }
 };
 
+const addtasktocomplete = (e) => {
+  const completedList = document.querySelector("#done-list");
+  const taskItem = e.target.parentNode;
+
+  if (e.target.checked) {
+    if (!completedList.querySelector("h3")) {
+      const completedTitle = document.createElement("h3");
+      completedTitle.textContent = "Completed";
+      completedList.prepend(completedTitle);
+    }
+
+    const newTask = document.createElement("li");
+    newTask.textContent = e.target.nextElementSibling.textContent;
+    completedList.appendChild(newTask);
+    taskItem.remove();
+  }
+};
+
 //   Check things off my list so that I can see what I’ve done
 test("Checking an entry marks it as complete", () => {
-  // check if checkmark is true/false
+//   Check if checkmark is true/false
 });
 
 //  Placeholder event listener to connect to button
