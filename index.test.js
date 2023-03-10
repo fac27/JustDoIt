@@ -72,7 +72,7 @@ test("Toggling the filter hides completed tasks from the list", () => {
     ]
   }
 
-  let result = taskList.tasks.filter(task => !task.completed);
+  let result = JSON.stringify(taskList.tasks.filter(task => !task.completed));
   console.log(result)
-  equal(result, [{"completed": false}])
+  equal(result, JSON.stringify([{"completed": false}]))
 });
