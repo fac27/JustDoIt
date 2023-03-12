@@ -1,76 +1,117 @@
 // Add tasks to a list so that I can keep track of them
-//do we want to create a simple aray or an array of object? eg.
-// const date = new Date().toDateString();
-
 const taskList = document.querySelector("#todo-list");
-const newTaskTemplate = document.querySelector("#newTaskTemplate");
+const completedList = document.querySelector("#done-list");
+const form = document.getElementById("task-form");
 const tasks = [];
-//add task to an array
 
 const addTask = (array, item) => {
-  array.push(item);
-  return array;
+  return new Promise((resolve, reject) => {
+    array.push(item);
+    resolve(array);
+    return array;
+  });
 };
 
-const addTaskToList = (task) => {
+const createTaskElement = (taskName) => {
+  const newTaskTemplate = document.querySelector("#newTaskTemplate");
   const newTask = newTaskTemplate.content.cloneNode(true);
-  newTask.querySelector("label").textContent = task;
+  newTask.querySelector("label").textContent = taskName;
   const taskItem = newTask.querySelector(".task");
-  taskList.appendChild(newTask);
-  taskList.addEventListener("click", addtasktocomplete);
-  addTask(tasks, newTask);
+  // taskList.addEventListener("click", addtasktocomplete);
+  const checkbox = newTask.querySelector(".todo-item");
+  checkbox.addEventListener("change", taskDone);
+  return newTask;
 };
-const form = document.getElementById("task-form");
 
-form.addEventListener("submit", (event) => {
+const addTasksToList = (tasks) => {
+  tasks.forEach((task) => {
+    const taskElement = createTaskElement(task);
+    taskList.appendChild(taskElement);
+  });
+};
+const submitTask = (event) => {
   event.preventDefault();
   const taskInput = document.querySelector("#input-task");
   const taskName = taskInput.value.trim();
   if (taskName !== "") {
-    addTaskToList(taskName);
+    addTask(tasks, taskName)
+      .then((array) => {
+        addTasksToList([taskName]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     taskInput.value = "";
   }
+  if (!taskList.querySelector("h3")) {
+    const tasksTitle = document.createElement("h3");
+    tasksTitle.textContent = "To Do";
+    taskList.prepend(tasksTitle);
+  }
   document.forms[0].reset();
-});
-
-const taskDone = () => {
-  if (checkbox.checked) {
-    return true;
-  } else {
-    return false;
-  }
 };
 
-const addtasktocomplete = (e) => {
-  const completedList = document.querySelector("#done-list");
-  const taskItem = e.target.parentNode;
+form.addEventListener("submit", submitTask);
 
+const moveTask = (taskItem, todoList, doneList) => {
+  return new Promise((resolve, reject) => {
+    todoList.removeChild(taskItem);
+    doneList.appendChild(taskItem);
+    resolve(taskItem);
+  });
+};
+const taskDone = (e) => {
+  const taskItem = e.target.parentNode.parentNode;
   if (e.target.checked) {
-    if (!completedList.querySelector("h3")) {
-      const completedTitle = document.createElement("h3");
-      completedTitle.textContent = "Completed";
-      completedList.prepend(completedTitle);
-    }
-
-    const newTask = document.createElement("li");
-    newTask.textContent = e.target.nextElementSibling.textContent;
-    completedList.appendChild(newTask);
-    taskItem.remove();
+    moveTask(taskItem, taskList, completedList)
+      .then((taskItem) => {
+        if (!completedList.querySelector("h3")) {
+          const completedTitle = document.createElement("h3");
+          completedTitle.textContent = "Completed";
+          completedList.prepend(completedTitle);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  } else {
+    moveTask(taskItem, completedList, taskList).catch((error) => {
+      console.log(error);
+    });
   }
 };
 
-//  Placeholder event listener to connect to button
+// const addtasktocomplete = (e) => {
+//   const completedList = document.querySelector("#done-list");
+//   const taskItem = e.target.parentNode;
+
+//   if (e.target.checked) {
+//     if (!completedList.querySelector("h3")) {
+//       const completedTitle = document.createElement("h3");
+//       completedTitle.textContent = "Completed";
+//       completedList.prepend(completedTitle);
+//     }
+
+//     const newTask = document.createElement("li");
+//     newTask.textContent = e.target.nextElementSibling.textContent;
+//     completedList.appendChild(newTask);
+//     taskItem.remove();
+//   }
+// };
+
 //   Delete things from the list if I don’t need to do them anymore
 const deleteItem = (event) => {
   if (event.target.matches("#delete-button")) {
     const taskItem = event.target.closest(".task");
-    const index = [...taskList.children].indexOf(taskItem);
+    const todoIndex = [...taskList.children].indexOf(taskItem);
     taskItem.remove();
-    tasks.splice(index, 1);
+    tasks.splice(todoIndex, 1);
+    const doneIndex = [...completedList.children].indexOf(taskItem);
+    tasks.splice(doneIndex, 1);
   }
 };
-
 taskList.addEventListener("click", deleteItem);
+completedList.addEventListener("click", deleteItem);
 
 //   Filter out completed to-dos from my list so that I can focus on what’s left to do
 
@@ -97,3 +138,53 @@ const filterComplete = () => {
 
 //  Placeholder event listener to connect to button
 // button.addEventListener("click", filterComplete());
+
+//GRAVEYARD//
+
+// const addTaskToList = (task) => {
+//   const newTaskTemplate = document.querySelector("#newTaskTemplate");
+//   const newTask = newTaskTemplate.content.cloneNode(true);
+//   newTask.querySelector("label").textContent = task;
+//   const taskItem = newTask.querySelector(".task");
+//   taskList.appendChild(newTask);
+//   taskList.addEventListener("click", addtasktocomplete);
+//   // addTask(tasks, newTask);
+// };
+
+// form.addEventListener("submit", (event) => {
+//   event.preventDefault();
+//   const taskInput = document.querySelector("#input-task");
+//   const taskName = taskInput.value.trim();
+//   if (taskName !== "") {
+//     addTask(tasks,taskName)
+//     addTaskToList(taskName);
+//     taskInput.value = "";
+//   }
+//   document.forms[0].reset();
+// });
+
+//  const submitTask = (event) => {
+//   event.preventDefault();
+//   const taskInput = document.querySelector("#input-task");
+//   const taskName = taskInput.value.trim();
+//   if (taskName !== "") {
+//     tasks.push(taskName);
+//     addTasksToList([taskName]);
+//     taskInput.value = "";
+//   }
+//   document.forms[0].reset();
+// };
+// const taskDone = (e) => {
+//   const completedList = document.querySelector("#done-list");
+//   const taskItem = e.target.parentNode;
+//   if (e.target.checked) {
+//     completedList.appendChild(newTask);
+//     if (!completedList.querySelector("h3")) {
+//       const completedTitle = document.createElement("h3");
+//       completedTitle.textContent = "Completed";
+//       completedList.prepend(completedTitle);
+//     }
+//   } else {
+//     taskList.appendChild(newTask);
+//   }
+// };

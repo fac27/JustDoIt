@@ -14,6 +14,7 @@ function test(name, testFunction) {
   console.groupEnd(name);
 }
 
+
 // FIRST TESTS//
 //Add tasks to a list so that I can keep track of them
 test("Submitting a new task adds it to the list", () => {
