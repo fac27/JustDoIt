@@ -6,9 +6,13 @@ const tasks = [];
 
 const addTask = (array, item) => {
   return new Promise((resolve, reject) => {
-    array.push(item);
+    const task = { name: item, completed: false };
+    array.push(task);
     resolve(array);
     return array;
+  }).then(updatedArray => {
+    localStorage.setItem('tasks', JSON.stringify(updatedArray));
+    return updatedArray;
   });
 };
 
@@ -29,6 +33,7 @@ const addTasksToList = (tasks) => {
     taskList.appendChild(taskElement);
   });
 };
+
 const submitTask = (event) => {
   event.preventDefault();
   const taskInput = document.querySelector("#input-task");
@@ -41,7 +46,7 @@ const submitTask = (event) => {
       .catch((error) => {
         console.log(error);
       });
-    taskInput.value = "";
+    taskInput.value = ""; 
   }
   if (!taskList.querySelector("h3")) {
     const tasksTitle = document.createElement("h3");
@@ -58,8 +63,20 @@ const moveTask = (taskItem, todoList, doneList) => {
     todoList.removeChild(taskItem);
     doneList.appendChild(taskItem);
     resolve(taskItem);
-  });
-};
+  }).then(updatedTaskItem => {
+      const taskName = updatedTaskItem.querySelector('label').textContent;
+      const tasks = JSON.parse(localStorage.getItem('tasks'));
+      const updatedTasks = tasks.map(task => {
+        if (task.name === taskName) {
+          task.completed = true;
+        }
+        return task;
+      });
+      localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+      return updatedTaskItem;
+    });
+  };
+
 const taskDone = (e) => {
   const taskItem = e.target.parentNode.parentNode;
   if (e.target.checked) {

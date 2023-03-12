@@ -40,29 +40,9 @@ ul {
   text-align: center;
 }
 
-.hamburger-menu > div {
-  width: 17px;
-  height: 4px;
-  background-color: var(--black);
-  margin: 4px;
-}
-
 /* Desktop/tablet styling */
 
 @media screen and (min-width: 450px) {
-  .hamburger-menu {
-    width: 15px;
-    height: 15px;
-    cursor: pointer;
-    padding: 10px;
-  }
-
-  .hamburger-menu > div {
-    width: 17px;
-    height: 4px;
-    background-color: var(--black);
-    margin: 4px;
-  }
   .two-columns {
     display: grid;
     grid-template-columns: 1fr 1fr;
