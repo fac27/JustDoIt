@@ -8,16 +8,6 @@ function equal(actual, expected, message) {
   }
 }
 
-function notEqual(actual, expected, message) {
-  if (actual !== expected) {
-    const defaultMessage = `${expected} is different to ${actual}`;
-    console.info("Pass: " + (message || defaultMessage));
-  } else {
-    const defaultMessage = `${expected} is the same as ${actual}`;
-    console.error("Fail: " + (message || defaultMessage));
-  }
-}
-
 function test(name, testFunction) {
   console.group(name);
   testFunction();

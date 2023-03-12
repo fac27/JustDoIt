@@ -86,7 +86,7 @@ taskList.addEventListener("click", deleteItem);
 
 //   Filter out completed to-dos from my list so that I can focus on what’s left to do
 //   Link to a button with click event listener
-element.addeventlistner("click", filterComplete());
+// element.addeventlistner("click", filterComplete());
 
 const filterComplete = () => {
   const taskList = [];
@@ -96,4 +96,4 @@ const filterComplete = () => {
 };
 
 //  Placeholder event listener to connect to button
-button.addEventListener("click", filterComplete());
+// button.addEventListener("click", filterComplete());
