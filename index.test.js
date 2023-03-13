@@ -19,8 +19,8 @@ function test(name, testFunction) {
 test("Submitting a new task adds it to the list", async () => {
   const promise = addTask([], "item");
   const result = await promise;
-  // console.log("Actual result:", result);
-  equal(result.length, 1,"Submitting a new task adds it to the list");
+  console.log("Actual result:", result);
+  equal(result.length, 1, "Submitting a new task adds it to the list");
 });
 
 //SECOND TESTS//
