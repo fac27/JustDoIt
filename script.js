@@ -10,12 +10,15 @@ const addTask = (array, item) => {
     array.push(task);
     resolve(array);
     return array;
-  }).then(updatedArray => {
-    localStorage.setItem('tasks', JSON.stringify(updatedArray));
-    return updatedArray;
-  });
+  })
+    .then((updatedArray) => {
+      localStorage.setItem("tasks", JSON.stringify(updatedArray));
+      return updatedArray;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
-
 const createTaskElement = (taskName) => {
   const newTaskTemplate = document.querySelector("#newTaskTemplate");
   const newTask = newTaskTemplate.content.cloneNode(true);
@@ -46,7 +49,7 @@ const submitTask = (event) => {
       .catch((error) => {
         console.log(error);
       });
-    taskInput.value = ""; 
+    taskInput.value = "";
   }
   if (!taskList.querySelector("h3")) {
     const tasksTitle = document.createElement("h3");
@@ -63,19 +66,22 @@ const moveTask = (taskItem, todoList, doneList) => {
     todoList.removeChild(taskItem);
     doneList.appendChild(taskItem);
     resolve(taskItem);
-  }).then(updatedTaskItem => {
-      const taskName = updatedTaskItem.querySelector('label').textContent;
-      const tasks = JSON.parse(localStorage.getItem('tasks'));
-      const updatedTasks = tasks.map(task => {
-        if (task.name === taskName) {
-          task.completed = true;
-        }
-        return task;
-      });
-      localStorage.setItem('tasks', JSON.stringify(updatedTasks));
-      return updatedTaskItem;
+  }).then((updatedTaskItem) => {
+    const taskName = updatedTaskItem.querySelector("label").textContent;
+    const tasks = JSON.parse(localStorage.getItem("tasks"));
+    const updatedTasks = tasks.map((task) => {
+      if (task.name === taskName) {
+        task.completed = true;
+      }
+      return task;
     });
-  };
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    return updatedTaskItem;
+  })
+  .catch((error)=>{
+    console.log(error);
+  })
+};
 
 const taskDone = (e) => {
   const taskItem = e.target.parentNode.parentNode;
