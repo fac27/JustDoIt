@@ -30,3 +30,13 @@ Use scope to control what variables are accessible inside functions and blocks
 ### Design 
 Use CSS grid to create complex layouts
 Use CSS grid to make layouts that adapt to the viewport size
+
+## Accessing the project
+
+You can clone into JustDoIt in your text editor with the below terminal prompt:
+
+```
+git clone https://github.com/fac27/JustDoIt
+```
+
+From there, you can access and open the index.html file within your browser.
