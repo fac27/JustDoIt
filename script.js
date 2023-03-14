@@ -5,20 +5,16 @@ const form = document.getElementById("task-form");
 const tasks = [];
 
 const addTask = (array, item) => {
-  return new Promise((resolve, reject) => {
-    const task = { name: item, completed: false };
-    array.push(task);
-    resolve(array);
-    return array;
-  })
-    .then((updatedArray) => {
-      localStorage.setItem("tasks", JSON.stringify(updatedArray));
-      return updatedArray;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  const task = { name: item, completed: false };
+  array.push(task);
+  saveTasksToLocalStorage(array);
+  return array;
 };
+
+const saveTasksToLocalStorage = (tasks) => {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+};
+
 const createTaskElement = (taskName) => {
   const newTaskTemplate = document.querySelector("#newTaskTemplate");
   const newTask = newTaskTemplate.content.cloneNode(true);
@@ -42,13 +38,8 @@ const submitTask = (event) => {
   const taskInput = document.querySelector("#input-task");
   const taskName = taskInput.value.trim();
   if (taskName !== "") {
-    addTask(tasks, taskName)
-      .then((array) => {
-        addTasksToList([taskName]);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    addTask(tasks, taskName);
+    addTasksToList([taskName]);
     taskInput.value = "";
   }
   if (!taskList.querySelector("h3")) {
@@ -62,41 +53,30 @@ const submitTask = (event) => {
 form.addEventListener("submit", submitTask);
 
 const moveTask = (taskItem, todoList, doneList) => {
-  return new Promise((resolve, reject) => {
-    todoList.removeChild(taskItem);
-    doneList.appendChild(taskItem);
-    resolve(taskItem);
-  }).then((updatedTaskItem) => {
-    const taskName = updatedTaskItem.querySelector("label").textContent;
-    const tasks = JSON.parse(localStorage.getItem("tasks"));
-    const updatedTasks = tasks.map((task) => {
-      if (task.name === taskName) {
-        task.completed = true;
-      }
-      return task;
-    });
-    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-    return updatedTaskItem;
-  })
-  .catch((error)=>{
-    console.log(error);
-  })
+  todoList.removeChild(taskItem);
+  doneList.appendChild(taskItem);
+
+  const taskName = updatedTaskItem.querySelector("label").textContent;
+  const tasks = JSON.parse(localStorage.getItem("tasks"));
+  const updatedTasks = tasks.map((task) => {
+    if (task.name === taskName) {
+      task.completed = true;
+    }
+    return task;
+  });
+  localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+  return taskItem;
 };
 
 const taskDone = (e) => {
   const taskItem = e.target.parentNode.parentNode;
   if (e.target.checked) {
-    moveTask(taskItem, taskList, completedList)
-      .then((taskItem) => {
-        if (!completedList.querySelector("h3")) {
+    moveTask(taskItem, taskList, completedList);
+                if (!completedList.querySelector("h3")) {
           const completedTitle = document.createElement("h3");
           completedTitle.textContent = "Completed";
           completedList.prepend(completedTitle);
         }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   } else {
     moveTask(taskItem, completedList, taskList).catch((error) => {
       console.log(error);
