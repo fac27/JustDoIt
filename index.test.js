@@ -16,11 +16,9 @@ function test(name, testFunction) {
 
 // FIRST TESTS//
 //Add tasks to a list so that I can keep track of them
-test("Submitting a new task adds it to the list", async () => {
-  const promise = addTask([], "item");
-  const result = await promise;
-  console.log("Actual result:", result);
-  equal(result.length, 1, "Submitting a new task adds it to the list");
+test("Submitting a new task adds it to the list", () => {
+  const result = addTasksToList ("item");
+  equal(result.length, 1);
 });
 
 //SECOND TESTS//
@@ -36,16 +34,4 @@ test("Deleting an entry removes it from the list", () => {
   const result = [1, 2, 3].splice(0);
   equal(result.length, 2);
   // return result.length;
-});
-
-// FOURTH TESTS//
-// filter hides completed to-do's
-test("Toggling the filter hides completed tasks from the list", () => {
-  const taskList = {
-    tasks: [{ completed: true }, { completed: false }],
-  };
-
-  let result = JSON.stringify(taskList.tasks.filter((task) => !task.completed));
-  console.log(result);
-  equal(result, JSON.stringify([{ completed: false }]));
 });

@@ -38,7 +38,7 @@ const submitTask = (event) => {
   const taskInput = document.querySelector("#input-task");
   const taskName = taskInput.value.trim();
   if (taskName !== "") {
-    addTask(tasks, taskName);
+    // addTask(tasks, taskName);
     addTasksToList([taskName]);
     taskInput.value = "";
   }
@@ -107,29 +107,3 @@ const deleteItem = (event) => {
 };
 taskList.addEventListener("click", deleteItem);
 completedList.addEventListener("click", deleteItem);
-
-//   Filter out completed to-dos from my list so that I can focus on what’s left to do
-
-// const filterComplete = () => {
-//   const taskList = {
-//     'tasks': [
-//       //{completed: true},
-//     ]
-//   };
-//   return taskList.tasks.filter(task => !task.completed);
-
-// };
-
-//   Filter out completed to-dos from my list so that I can focus on what’s left to do
-//   Link to a button with click event listener
-// element.addeventlistner("click", filterComplete());
-
-const filterComplete = () => {
-  const taskList = [];
-  let filterCompleted = false;
-
-  return taskList.filter((task) => !filterCompleted || !task.completed);
-};
-
-//  Placeholder event listener to connect to button
-// button.addEventListener("click", filterComplete());
