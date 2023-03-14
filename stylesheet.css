@@ -15,9 +15,24 @@ html {
 
 /* Mobile styling */
 
+.center-element{
+  text-align: center;
+}
+
+.width-100{
+  width: 100%;
+}
+
+.lower-pg{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
 ul {
   list-style-type: none;
 }
+
 .red-circle {
   border-radius: 50%;
   color: rgb(171, 0, 0);
