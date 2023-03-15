@@ -4,10 +4,7 @@ const completedList = document.querySelector("#done-list");
 const form = document.getElementById("task-form");
 const tasks = [];
 
-//fixing array
-// const taskInput = document.querySelector("#input-task");
-// const taskName = taskInput.value.trim();
-
+//create an array of objects
 const addTask = (array, item) => {
   const task = { id: Date.now(),name: item, completed: false };
   array.push(task);
@@ -19,6 +16,7 @@ const addTask = (array, item) => {
 //   localStorage.setItem("tasks", JSON.stringify(tasks));
 // };
 
+//create element from html template
 const createTaskElement = (task) => {
   const newTaskTemplate = document.querySelector("#newTaskTemplate");
   const newTask = newTaskTemplate.content.cloneNode(true);
@@ -31,12 +29,14 @@ const createTaskElement = (task) => {
   return newTask;
 };
 
+//with each task created, add it to the list
 const addTasksToList = (tasks) => {
   taskList.innerHTML = "";
   tasks.forEach((task) => {
   taskList.appendChild(createTaskElement(task))
 });
 };
+//on submission, get the values from the input and execute the functions above
 const submitTask = (event) => {
   event.preventDefault();
   const taskInput = document.querySelector("#input-task");
@@ -55,19 +55,11 @@ const submitTask = (event) => {
 };
 
 form.addEventListener("submit", submitTask);
-console.log(tasks)
-// // const addTasksToList = (newTask) => {
-// //   tasks.forEach((task) => {
-// //     createDomElement(task)
-// //     // const taskElement = createTaskElement(task);
-// //     taskList.appendChild(newTask);
-// //   });
-// // };
 
+//moves tasks from one list to the other based on if the task is complete - probably best if we move locate storage function to it's independent function 
 const moveTask = (taskItem, todoList, doneList) => {
   todoList.removeChild(taskItem);
   doneList.appendChild(taskItem);
-
   const taskName = updatedTaskItem.querySelector("label").textContent;
   const tasks = JSON.parse(localStorage.getItem("tasks"));
   const updatedTasks = tasks.map((task) => {
@@ -80,12 +72,13 @@ const moveTask = (taskItem, todoList, doneList) => {
   return taskItem;
 };
 
+//create header for completed tasks if there isn't one 
 const addCompletedHeader = (completedList) => {
   const completedTitle = document.createElement("h3")
   completedTitle.textContent = "Completed"
   completedList.prepend(completedTitle)
 }
-
+//move the tasks back and forth
 const moveTask2 = (taskItem, todoList, completedList) => {
   todoList.removeChild(taskItem)
   if(!completedList.querySelector("h3")) {
@@ -93,7 +86,7 @@ const moveTask2 = (taskItem, todoList, completedList) => {
   }
   completedList.appendChild(taskItem)
 }
-
+//if it's checked move these tasks around with the functions above
 const taskDone = (e) => {
   const taskItem = e.target.parentNode.parentNode;
   if (e.target.checked) {
