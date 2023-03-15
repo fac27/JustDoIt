@@ -9,7 +9,7 @@ const tasks = [];
 // const taskName = taskInput.value.trim();
 
 const addTask = (array, item) => {
-  const task = { name: item, completed: false };
+  const task = { id: Date.now(),name: item, completed: false };
   array.push(task);
   return array;
 };
@@ -26,6 +26,8 @@ const createTaskElement = (task) => {
   const taskItem = newTask.querySelector(".task");
   const checkbox = newTask.querySelector(".todo-item");
   checkbox.addEventListener("change", taskDone);
+  taskList.addEventListener("click", deleteItem);
+  completedList.addEventListener("click", deleteItem);  
   return newTask;
 };
 
@@ -97,24 +99,20 @@ const taskDone = (e) => {
   if (e.target.checked) {
     moveTask2(taskItem, taskList, completedList)
   } else {
-    moveTask(taskItem, completedList, taskList).catch((error) => {
-      console.log(error);
-    });
+    moveTask(taskItem, completedList, taskList)
   }
 };
 
 
-// //   Delete things from the list if I don’t need to do them anymore
-// const deleteItem = (event) => {
-//   if (event.target.matches("#delete-button")) {
-//     const taskItem = event.target.closest(".task");
-//     const todoIndex = [...taskList.children].indexOf(taskItem);
-//     taskItem.remove();
-//     tasks.splice(todoIndex, 1);
-//     const doneIndex = [...completedList.children].indexOf(taskItem);
-//     tasks.splice(doneIndex, 1);
-//   }
-// };
+//   Delete things from the list if I don’t need to do them anymore
+const deleteItem = (event) => {
+  if (event.target.matches("#delete-button")) {
+    const taskItem = event.target.closest(".task");
+    const Index = tasks.findIndex((task)=>task.name === taskItem.querySelector("label").textContent);
+    tasks.splice(Index, 1);
+    taskItem.remove();
+  }
+};
 // taskList.addEventListener("click", deleteItem);
 // completedList.addEventListener("click", deleteItem);
 
