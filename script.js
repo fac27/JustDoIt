@@ -1,5 +1,5 @@
 // Add tasks to a list so that I can keep track of them
-// const taskList = document.querySelector("#todo-list");
+const taskList = document.querySelector("#todo-list");
 const completedList = document.querySelector("#done-list");
 const form = document.getElementById("task-form");
 const tasks = [];
@@ -25,12 +25,11 @@ const createTaskElement = (task) => {
   newTask.querySelector("label").textContent = task.name;
   const taskItem = newTask.querySelector(".task");
   const checkbox = newTask.querySelector(".todo-item");
-  // checkbox.addEventListener("change", taskDone);
+  checkbox.addEventListener("change", taskDone);
   return newTask;
 };
 
 const addTasksToList = (tasks) => {
-  const taskList = document.querySelector("#todo-list");
   taskList.innerHTML = "";
   tasks.forEach((task) => {
   taskList.appendChild(createTaskElement(task))
@@ -38,7 +37,6 @@ const addTasksToList = (tasks) => {
 };
 const submitTask = (event) => {
   event.preventDefault();
-  const taskList = document.querySelector("#todo-list");
   const taskInput = document.querySelector("#input-task");
   const taskName = taskInput.value.trim();
   addTask(tasks,taskName)
@@ -55,7 +53,7 @@ const submitTask = (event) => {
 };
 
 form.addEventListener("submit", submitTask);
-
+console.log(tasks)
 // // const addTasksToList = (newTask) => {
 // //   tasks.forEach((task) => {
 // //     createDomElement(task)
@@ -63,8 +61,6 @@ form.addEventListener("submit", submitTask);
 // //     taskList.appendChild(newTask);
 // //   });
 // // };
-
-
 
 const moveTask = (taskItem, todoList, doneList) => {
   todoList.removeChild(taskItem);
@@ -78,34 +74,34 @@ const moveTask = (taskItem, todoList, doneList) => {
     }
     return task;
   });
-  localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+  // localStorage.setItem("tasks", JSON.stringify(updatedTasks));
   return taskItem;
 };
 
-// const addCompletedHeader = (completedList) => {
-//   const completedTitle = document.createElement("h3")
-//   completedTitle.textContent = "Completed"
-//   completedList.prepend(completedTitle)
-// }
+const addCompletedHeader = (completedList) => {
+  const completedTitle = document.createElement("h3")
+  completedTitle.textContent = "Completed"
+  completedList.prepend(completedTitle)
+}
 
-// const moveTask2 = (taskItem, todoList, completedList) => {
-//   todoList.removeChild(taskItem)
-//   if(!completedList.querySelector("h3")) {
-//     addCompletedHeader(completedList)
-//   }
-//   completedList.appendChild(taskItem)
-// }
+const moveTask2 = (taskItem, todoList, completedList) => {
+  todoList.removeChild(taskItem)
+  if(!completedList.querySelector("h3")) {
+    addCompletedHeader(completedList)
+  }
+  completedList.appendChild(taskItem)
+}
 
-// const taskDone = (e) => {
-//   const taskItem = e.target.parentNode.parentNode;
-//   if (e.target.checked) {
-//     moveTask2(taskItem, taskList, completedList)
-//   } else {
-//     moveTask(taskItem, completedList, taskList).catch((error) => {
-//       console.log(error);
-//     });
-//   }
-// };
+const taskDone = (e) => {
+  const taskItem = e.target.parentNode.parentNode;
+  if (e.target.checked) {
+    moveTask2(taskItem, taskList, completedList)
+  } else {
+    moveTask(taskItem, completedList, taskList).catch((error) => {
+      console.log(error);
+    });
+  }
+};
 
 
 // //   Delete things from the list if I don’t need to do them anymore
