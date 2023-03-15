@@ -18,18 +18,20 @@ As a user I want to:
 
 ## Learnings
 ### Testing 
-Check that passing a given input into our tests returns the expected output
-Write tests to mimic the behaviour of a user performing different actions
+- [ ] Check that passing a given input into our tests returns the expected output
+- [ ] Write tests to mimic the behaviour of a user performing different actions
+
+We used TDD but then when refactoring the code, we didn't go back to rewrite the tets.
 
 ### JS 
-Write testable, modular functions
-Write functions that add, remove or modify DOM nodes
-Apply event listeners to HTML form elements
-Use scope to control what variables are accessible inside functions and blocks
+- [x] Write testable, modular functions
+- [x] Write functions that add, remove or modify DOM nodes
+- [x] Apply event listeners to HTML form elements
+- [x] Use scope to control what variables are accessible inside functions and blocks
 
 ### Design 
-Use CSS grid to create complex layouts
-Use CSS grid to make layouts that adapt to the viewport size
+- [x] Use CSS grid to create complex layouts
+- [x] Use CSS grid to make layouts that adapt to the viewport size
 
 ## Accessing the project
 
@@ -40,3 +42,5 @@ git clone https://github.com/fac27/JustDoIt
 ```
 
 From there, you can access and open the index.html file within your browser.
+
+We removed the promises as they were redundant but haven't merged yet - they're in the branch remove-promises.
