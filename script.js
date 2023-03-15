@@ -55,10 +55,14 @@ const submitTask = (event) => {
 
 form.addEventListener("submit", submitTask);
 
-//moves tasks from one list to the other based on if the task is complete - probably best if we move locate storage function to it's independent function
+//moves tasks from one list to the other based on if the task is complete - probably best if we move 
+// locate storage function to it's independent function
 const moveTask = (taskItem, todoList, doneList) => {
   todoList.removeChild(taskItem);
   doneList.appendChild(taskItem);
+};
+
+const saveItWhenChecked = () => {
   const taskName = updatedTaskItem.querySelector("label").textContent;
   const tasks = JSON.parse(localStorage.getItem("tasks"));
   const updatedTasks = tasks.map((task) => {
@@ -67,7 +71,7 @@ const moveTask = (taskItem, todoList, doneList) => {
     }
     return task;
   });
-  // localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+  localStorage.setItem("tasks", JSON.stringify(updatedTasks));
   return taskItem;
 };
 
