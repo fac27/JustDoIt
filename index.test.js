@@ -16,9 +16,8 @@ function test(name, testFunction) {
 
 // FIRST TESTS//
 //Add tasks to a list so that I can keep track of them
-test("Submitting a new task adds it to the list", async () => {
-  const promise = addTask([], "item");
-  const result = await promise;
+test("Submitting a new task adds it to the list", () => {
+  const result = addTask([], "item");
   console.log("Actual result:", result);
   equal(result.length, 1, "Submitting a new task adds it to the list");
 });
