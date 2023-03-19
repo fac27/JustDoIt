@@ -38,6 +38,41 @@ const loadTasksFromLocalStorage = () => {
   }
 };
 
+//filters tasks which have checked checkboxes, hiding complete tasks
+//after this, will display an option to show all tasks, irrespective of their completion status
+const filterCheckedTasks = () => {
+  const taskItems = document.querySelectorAll("#todo-list .task");
+  const completedTaskItems = document.querySelectorAll("#done-list .task");
+
+  if (filterIncompleteBtn.textContent === "Show Incomplete Tasks") {
+    taskItems.forEach((taskItem) => {
+      const checkbox = taskItem.querySelector(".todo-item");
+      if (checkbox.checked) {
+        taskItem.style.display = "none";
+      }
+    });
+
+    completedTaskItems.forEach((taskItem) => {
+      taskItem.style.display = "none";
+    });
+
+    filterIncompleteBtn.textContent = "Show All Tasks";
+  } else {
+    taskItems.forEach((taskItem) => {
+      taskItem.style.display = "list-item";
+    });
+
+    completedTaskItems.forEach((taskItem) => {
+      taskItem.style.display = "list-item";
+    });
+
+    filterIncompleteBtn.textContent = "Show Incomplete Tasks";
+  }
+};
+
+//event listener for the filter button
+const filterIncompleteBtn = document.getElementById("filter-incomplete-btn");
+filterIncompleteBtn.addEventListener("click", filterCheckedTasks);
 
 //create an array of objects
 const addTask = (array, item) => {

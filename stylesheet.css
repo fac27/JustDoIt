@@ -55,6 +55,10 @@ ul {
   text-align: center;
 }
 
+.med-margin {
+  margin-top: 20px;
+}
+
 /* Desktop/tablet styling */
 
 @media screen and (min-width: 450px) {
