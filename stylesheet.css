@@ -7,9 +7,12 @@
 }
 
 /* Global HTML styling */
+*{
+  font-family: Questrial;
+
+}
 
 html {
-  font-family: Questrial;
   background-color: var(--bisque);
 }
 
@@ -37,7 +40,7 @@ ul {
   border-radius: 50%;
   color: rgb(171, 0, 0);
   background-color: rgb(244, 177, 177);
-  border-color: rgb(171, 0, 0);
+  border-color: rgb(171, 0, 0);  
 }
 
 .red-circle:hover {
